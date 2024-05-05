@@ -62,8 +62,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                <form action="/dashboard/item-delete/<%= noteID %>?_method=DELETE" method="POST"
-                    class="position-relative">
+                <form action="/dashboard/item/<%= noteID %>?_method=DELETE" method="POST" class="position-relative">
                     <button type="submit" class="btn btn-primary">Delete Note</button>
                 </form>
 
