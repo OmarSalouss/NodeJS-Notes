@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 exports.dashboard = async (req, res) => {
     let perPage = 12;
     let page = req.query.page || 1;
-
+    // console.log("Hi 😁❤");
+    // console.log();
+    // console.log(req.user.id);
+    // console.log(req.user);
+    // console.log();
+    // console.log();
     const locals = {
         title: "Dashboard",
         description: "Free NodeJs Notes App"
@@ -14,7 +19,8 @@ exports.dashboard = async (req, res) => {
         Note.aggregate([
             {
                 $sort: {
-                    createdAt: -1,
+                    updatedAt: -1,
+                    // createdAt: -1,
                 }
             },
             {
@@ -68,7 +74,7 @@ exports.dashboardUpdateNote = async (req, res) => {
     try {
         await Note.findOneAndUpdate(
             { _id: req.params.id },
-            { title: req.body.title, body: req.body.body }
+            { title: req.body.title, body: req.body.body, updatedAt: Date.now() }
         ).where({ user: req.user.id });
 
         res.redirect('/dashboard');
@@ -96,7 +102,8 @@ exports.dashboardAddNote = async (req, res) => {
 
 exports.dashboardAddNoteSubmit = async (req, res) => {
     try {
-        req.body.user = req.params.id;
+        // req.body.user = req.params.id;
+        req.body.user = req.user.id;
         await Note.create(req.body);
         res.redirect('/dashboard');
     } catch (error) {
